@@ -1,0 +1,80 @@
+<form [formGroup]="raceForm"  (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="raceName">Nom </label>
+    <input
+      pInputText
+      type="text"
+      formControlName="raceName"
+      placeholder="Nom"
+      [class.ng-dirty]="getControl(['raceName']).touched"
+    />
+    <app-form-error [formGroup]="raceForm" controlName="raceName"></app-form-error>
+  </div>
+
+  <div>
+    <label for="place">Endroit </label>
+    <input
+      pInputText
+      type="text"
+      formControlName="place"
+      placeholder="Endroit"
+      [class.ng-dirty]="getControl(['place']).touched"
+    />
+    <app-form-error [formGroup]="raceForm" controlName="place"></app-form-error>
+  </div>
+
+  <div>
+    <label for="raceType">Type </label>
+    <input
+      pInputText
+      type="text"
+      formControlName="raceType"
+      placeholder="Type de course"
+      [class.ng-dirty]="getControl(['raceType']).touched"
+    />
+    <app-form-error [formGroup]="raceForm" controlName="raceType"></app-form-error>
+  </div>
+
+  <div>
+    <label for="startDate">Date de départ </label>
+    <p-inputMask
+      mask="99/99/9999"
+      placeholder="dd/mm/yyyy"
+      formControlName="startDate"
+      slotChar="dd/mm/yyyy"
+      [class.ng-dirty]="getControl(['startDate']).touched"
+    />
+    <app-form-error [formGroup]="raceForm" controlName="startDate"></app-form-error>
+  </div>
+
+  <div>
+    <label for="distance">Distance </label>
+    <p-inputNumber
+      type="number"
+      formControlName="distance"
+      placeholder="Distance"
+      [class.ng-dirty]="getControl(['distance']).touched"
+      locale="fr-BE"
+      [maxFractionDigits]="2"
+    />
+    <app-form-error [formGroup]="raceForm" controlName="distance"></app-form-error>
+  </div>
+  
+  <div>
+    <label for="realDistance">Distance réelle </label>
+    <p-inputNumber
+      type="number"
+      formControlName="realDistance"
+      placeholder="Distance réelle"
+      [class.ng-dirty]="getControl(['realDistance']).touched"
+      locale="fr-BE"
+      [maxFractionDigits]="2"
+    />
+    <app-form-error [formGroup]="raceForm" controlName="realDistance"></app-form-error>
+  </div>
+
+  <input type="file" (change)="onFilePicked($event)" />
+
+  <p-button [disabled]="raceForm.invalid" type="ngSubmit" label="Envoyer" />
+</form>
