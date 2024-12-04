@@ -1,0 +1,35 @@
+<p-button [link]="true" label="Se connecter" (onClick)="showDialog()"></p-button>
+<p-dialog header="Se connecter" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <div class="formseparator"></div>
+    <p-floatLabel>
+      <input
+        pInputText
+        type="email"
+        formControlName="email"
+        [class.ng-dirty]="getControl(['email']).touched"
+      >
+      <label for="email">Email</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="loginForm" controlName="email"></app-form-error>
+
+    <div class="formseparator"></div>
+    <p-floatLabel>
+      <input
+        pInputText
+        type="password"
+        formControlName="password"
+        [class.ng-dirty]="getControl(['password']).touched"
+      >
+      <label for="password">Mot de passe</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="loginForm" controlName="password"></app-form-error>
+
+    <br>
+
+    <p-button [disabled]="loginForm.invalid" type="ngSubmit" label="Se connecter" />
+    <p>Pas encore de compte ? <a (click)="ouvrirRegister()" href="javascript:void(0)">S'enregistrer</a></p>
+  </form>
+</p-dialog>

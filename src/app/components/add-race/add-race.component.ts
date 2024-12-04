@@ -1,16 +1,19 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { FileSelectEvent, FileUpload, FileUploadModule } from 'primeng/fileupload';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { RaceService } from '../../services/race.service';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputMaskModule } from 'primeng/inputmask';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 @Component({
   selector: 'app-add-race',
   standalone: true,
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, InputMaskModule],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, InputMaskModule, FloatLabelModule, FormErrorComponent, FileUploadModule],
   templateUrl: './add-race.component.html',
   styleUrl: './add-race.component.scss'
 })
@@ -38,31 +41,36 @@ export class AddRaceComponent {
     })
   }
 
-  onFilePicked(event: Event) {
+  onFilePicked(event: FileSelectEvent) {
     console.log(event)
-    let file = (event.target as HTMLInputElement)?.files?.[0]; // Here we use only the first file (single file)
+    let file = event.files[0]; // Here we use only the first file (single file)
     console.log(file);
-    
+
     this.raceForm.patchValue({ file: file });
   }
 
   toFormData( formValue: any ) {
     const formData = new FormData();
-  
+
     for ( const key of Object.keys(formValue) ) {
       const value = formValue[key];
       formData.append(key, value);
     }
-  
+
     return formData;
   }
 
   convertDate(dateAConvertir: string) {
-    let dateArray = dateAConvertir.split("/");
+    let dateArray = dateAConvertir.split("/").filter(x => x);
+    console.log(dateArray)
     return `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
   }
-  
+
   getControl(ctrl: string[]): FormControl {
     return this.raceForm.get(ctrl) as FormControl;
+  }
+
+  clearFileInput(fileUpload: FileUpload) {
+    fileUpload.clear();
   }
 }

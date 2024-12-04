@@ -21,4 +21,8 @@ export class FormErrorComponent {
     }
     return this.formGroup?.get(this.controlName!);
   }
+
+  ngDoCheck() {
+    console.log(this.ctrl?.errors);
+  }
 }

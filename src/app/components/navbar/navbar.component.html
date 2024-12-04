@@ -1,1 +1,14 @@
 <p-button icon="pi pi-home" (click)="goTo('home')"></p-button>
+
+@if (this.isConnected) {
+  @if (user$ | async; as user) {
+    @if (user.role == 'Admin') {
+      <p-button [link]="true" (onClick)="goTo('admin')" label="page admin"></p-button>
+    }
+    <p-button [link]="true" (onClick)="goTo('profile')" [label]="user.firstname + ' ' + user.lastname"></p-button>
+  }
+  <p-button [link]="true" label="Se déconnecter" (onClick)="logout()"></p-button>
+} @else {
+  <app-register></app-register>
+  <app-login></app-login>
+}

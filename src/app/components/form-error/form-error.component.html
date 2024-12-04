@@ -4,7 +4,11 @@
   </span>
 
   <span *ngIf="ctrl?.errors?.['required']">
-    Le champ {{controlName}} est requis.
+    Le champ est requis.
+  </span>
+
+  <span *ngIf="ctrl?.errors?.['email']">
+    Le champ attend un email.
   </span>
 
   <span *ngIf="ctrl?.errors?.['errorMessage']">

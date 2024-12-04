@@ -1,0 +1,71 @@
+<p-button [link]="true" label="S'enregistrer" (onClick)="showDialog()"></p-button>
+<p-dialog header="S'enregister" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <div class="formseparator"></div>
+    <p-floatLabel>
+      <input
+        pInputText
+        type="text"
+        formControlName="firstname"
+        [class.ng-dirty]="getControl(['firstname']).touched"
+      >
+      <label for="firstname">Prenom</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="registerForm" controlName="firstname"></app-form-error>
+
+    <div class="formseparator"></div>
+    <p-floatLabel>
+      <input
+        pInputText
+        type="text"
+        formControlName="lastname"
+        [class.ng-dirty]="getControl(['lastname']).touched"
+      >
+      <label for="lastname">Nom</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="registerForm" controlName="lastname"></app-form-error>
+
+    <div class="formseparator"></div>
+    <p-floatLabel>
+      <input
+        pInputText
+        type="email"
+        formControlName="email"
+        [class.ng-dirty]="getControl(['email']).touched"
+      >
+      <label for="email">Email</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="registerForm" controlName="email"></app-form-error>
+
+    <div class="formseparator"></div>
+    <p-floatLabel>
+      <input
+        pInputText
+        type="password"
+        formControlName="password"
+        (change)="checkPasswordMatch()"
+        [class.ng-dirty]="getControl(['password']).touched"
+      >
+      <label for="password">Mot de passe</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="registerForm" controlName="password"></app-form-error>
+
+    <div class="formseparator"></div>
+    <p-floatLabel>
+      <input
+        pInputText
+        type="password"
+        formControlName="passwordConfirmation"
+        [class.ng-dirty]="getControl(['passwordConfirmation']).touched"
+      >
+      <label for="passwordConfirmation">Confirmation</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="registerForm" controlName="passwordConfirmation"></app-form-error>
+    <br>
+
+    <p-button [disabled]="registerForm.invalid" type="ngSubmit" label="S'enregister" />
+    <p>Déja un compte ? <a (click)="ouvrirLogin()" href="javascript:void(0)">Se connecter</a></p>
+
+  </form>
+</p-dialog>
