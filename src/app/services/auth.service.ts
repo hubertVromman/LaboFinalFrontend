@@ -52,6 +52,10 @@ export class AuthService {
     return this._client.head(`${this.url}/User/CheckEmail/${email}`);
   }
 
+  checkName(firstname: string, lastname: string) {
+    return this._client.head(`${this.url}/User/CheckName/?firstname=${firstname}&lastname=${lastname}`);
+  }
+
   refreshTokens() {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");

@@ -15,6 +15,7 @@ export class RunnerComponent {
   private router = inject(Router);
 
   runner: Runner = this.ar.snapshot.data['runner'];
+  // results: Result[] = this.ar.snapshot.data['results'];
 
   // ngOnInit() {
   //   if (this.runner == undefined) {

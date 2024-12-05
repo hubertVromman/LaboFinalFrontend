@@ -14,18 +14,27 @@
 
   <div class="formseparator"></div>
   <p-floatLabel>
-    <input
-      pInputText
+    <p-autoComplete
       type="text"
       formControlName="place"
+      [suggestions]="filteredLocalities"
+      (completeMethod)="search($event)"
+      optionLabel="name"
+      field="name"
       [class.ng-dirty]="getControl(['place']).touched"
-    >
-    <label for="place">Endroit de la course</label>
+    />
+    <label for="place">Localité</label>
   </p-floatLabel>
   <app-form-error [formGroup]="raceForm" controlName="place"></app-form-error>
 
   <div class="formseparator"></div>
-  <p-floatLabel>
+  <p-dropdown
+    [options]="raceTypes"
+    formControlName="raceType"
+    placeholder="Type de course"
+    [class.ng-dirty]="getControl(['raceType']).touched"
+  />
+  <!-- <p-floatLabel>
     <input
       pInputText
       type="text"
@@ -33,7 +42,7 @@
       [class.ng-dirty]="getControl(['raceType']).touched"
     >
     <label for="raceType">Type de course</label>
-  </p-floatLabel>
+  </p-floatLabel> -->
   <app-form-error [formGroup]="raceForm" controlName="raceType"></app-form-error>
 
   <div class="formseparator"></div>

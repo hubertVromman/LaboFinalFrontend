@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -26,13 +26,14 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       firstname: [null, [Validators.required]],
       lastname: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email], [this.existingEmailValidator()]],
+      email: [null, { validators: [Validators.required, Validators.email], asyncValidators: [this.existingEmailValidator()] }],
       password: [null, [Validators.required]],
       passwordConfirmation: [null, [Validators.required]],
     }, {
-      validator: [passwordMatchValidator],
-
-    });
+      validators: [passwordMatchValidator],
+      asyncValidators: [this.existingNameValidator()],
+      updateOn: 'blur'
+    } as AbstractControlOptions);
 
     this._auth.mustOpenRegister.subscribe({
       next: () => this.visible = true
@@ -71,13 +72,36 @@ export class RegisterComponent implements OnInit {
     return (control:AbstractControl) : Observable<ValidationErrors | null> => {
       const value = control.value;
 
-      // if (!value) {
-      //     return null;
-      // }
+      if (!value) {
+          return of(null);
+      }
 
       return this._auth.checkEmail(value).pipe(
         map(() => {
           return { 'errorMessage': 'L\'email existe déjà.' } as ValidationErrors
+        }),
+        catchError(() => {
+          return of(null)
+        })
+      )
+    }
+  }
+
+  existingNameValidator() {
+    return (control:AbstractControl) : Observable<ValidationErrors | null> => {
+
+      const firstname = control.get('firstname');
+      const lastname = control.get('lastname');
+
+      if (firstname?.value == null || lastname?.value == null) {
+        return of(null);
+      }
+
+      return this._auth.checkName(firstname.value, lastname.value).pipe(
+        map(() => {
+          const error = { 'errorMessage': 'Le nom existe déjà.' }
+          lastname.setErrors(error);
+          return error as ValidationErrors;
         }),
         catchError(() => {
           return of(null)
@@ -91,6 +115,8 @@ function passwordMatchValidator (control: AbstractControl): ValidationErrors | n
 
   const password = control.get('password');
   const confirmPassword = control.get('passwordConfirmation');
+
+  console.log(password?.value, confirmPassword?.value);
 
   if (password && confirmPassword && password.value !== confirmPassword.value) {
       // Appliquer l'erreur sur le champ spécifique

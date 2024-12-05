@@ -1,19 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 import { FileSelectEvent, FileUpload, FileUploadModule } from 'primeng/fileupload';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { Locality } from '../../models/locality';
 import { RaceService } from '../../services/race.service';
 import { FormErrorComponent } from '../form-error/form-error.component';
 
 @Component({
   selector: 'app-add-race',
   standalone: true,
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, InputMaskModule, FloatLabelModule, FormErrorComponent, FileUploadModule],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, InputMaskModule, FloatLabelModule, FormErrorComponent, FileUploadModule, AutoCompleteModule, DropdownModule],
   templateUrl: './add-race.component.html',
   styleUrl: './add-race.component.scss'
 })
@@ -22,6 +25,11 @@ export class AddRaceComponent {
   private ar = inject(ActivatedRoute);
   private router = inject(Router);
   private rs = inject(RaceService);
+
+  localities = this.ar.snapshot.data['localities'];
+  filteredLocalities: Locality[] = [];
+
+  raceTypes = ['route', 'nature', 'trail'];
 
   raceForm: FormGroup = this.fb.group({
     raceName: [null, [Validators.required]],
@@ -34,9 +42,10 @@ export class AddRaceComponent {
   });
 
   onSubmit() {
-    this.raceForm.value.startDate = this.convertDate(this.raceForm.value.startDate),
+    let formValue = {...this.raceForm.value};
+    formValue.startDate = this.convertDate(formValue.startDate);
 
-    this.rs.create(this.toFormData(this.raceForm.value)).subscribe({
+    this.rs.create(this.toFormData(formValue)).subscribe({
       next: data => console.log(data)
     })
   }
@@ -72,5 +81,13 @@ export class AddRaceComponent {
 
   clearFileInput(fileUpload: FileUpload) {
     fileUpload.clear();
+  }
+
+  search(event: AutoCompleteCompleteEvent) {
+
+    this.filteredLocalities = this.localities.filter((l: Locality) =>
+      l.name.toLowerCase().indexOf(event.query.toLowerCase()) == 0
+    );
+
   }
 }
