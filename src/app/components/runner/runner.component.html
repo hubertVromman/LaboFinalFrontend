@@ -2,3 +2,8 @@
   {{runner.firstName}}
   {{runner.lastName}}
 </p>
+
+@for (result of results; track $index) {
+  <a [routerLink]="['/race', result.raceId]">{{result.race?.raceName}}</a>
+  <p>{{result.generalRankShown}} / {{result.race?.resultNumber}}</p>
+}

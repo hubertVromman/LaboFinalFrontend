@@ -5,10 +5,11 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import localeFr from '@angular/common/locales/fr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { dateInterceptor } from './interceptors/date.interceptor';
 import { tokenInterceptor } from './interceptors/token.interceptor';
+
+import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr);
 
 export const appConfig: ApplicationConfig = {

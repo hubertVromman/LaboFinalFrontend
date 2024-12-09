@@ -1,0 +1,8 @@
+<h2>
+  {{ race.raceName }} {{ race.distance }}km
+</h2>
+
+@for (result of results; track $index) {
+  {{ result.generalRankShown }} {{ result.runner?.lastName }} {{ result.runner?.firstName }} {{ result.time }} {{ result.speed }}
+  <br>
+}
