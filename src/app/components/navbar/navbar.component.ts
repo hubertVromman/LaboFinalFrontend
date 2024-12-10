@@ -19,14 +19,14 @@ export class NavbarComponent {
   private router = inject(Router);
   private as = inject(AuthService);
 
+  logoPath = "/assets/logo.png";
+
   isConnected: boolean = false;
   numberOfItem: number = 0;
 
-  user$: Observable<User>;
+  user$: Observable<User> = this.as.getProfile();
 
-  constructor() {
-    this.user$ = this.as.getProfile();
-
+  ngOnInit() {
     this.as.isConnectedSubject.subscribe({
       next: (data) => {
         this.isConnected = data;
@@ -35,17 +35,16 @@ export class NavbarComponent {
       }
     });
 
-    // this._ps.commandesSubject.subscribe({
-    //   next: (data) => {
-    //     console.log(data.map(c => c.livreIdQuantite))
-    //     this.numberOfItem = data.map(c => Object.keys(c.livreIdQuantite).length)
-    //       .reduce((accumulator: number, currentValue: any) => accumulator + currentValue, 0);
-    //   }
-    // });
+    this.as.refreshTokens().subscribe({
+      error: err => {
+        console.log(err);
+        this.as.logout(false);
+      }
+    });
   }
 
   logout() {
-    this.as.logout();
+    this.as.logout(true);
   }
 
   goTo(dest: string) {

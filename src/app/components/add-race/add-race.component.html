@@ -20,7 +20,7 @@
       [suggestions]="filteredLocalities"
       (completeMethod)="search($event)"
       optionLabel="name"
-      field="name"
+      optionValue="name"
       [class.ng-dirty]="getControl(['place']).touched"
     />
     <label for="place">Localité</label>

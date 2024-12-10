@@ -70,11 +70,12 @@ export class AuthService {
     );
   }
 
-  logout() {
+  logout(mustGoToHome = false) {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     this.isConnectedSubject.next(this.isConnected);
-    this._router.navigate(["home"]);
+    if (mustGoToHome)
+      this._router.navigate(["home"]);
   }
 
   getProfile() : Observable<User> {
