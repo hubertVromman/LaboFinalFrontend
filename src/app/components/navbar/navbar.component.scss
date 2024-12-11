@@ -1,0 +1,19 @@
+.container {
+  background-color: #f3f3f1;
+  border-radius: 1px;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // top: 3px;
+  // position: sticky;
+  // z-index: 100;
+  // border-bottom: 1px solid gray;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 3px;
+}

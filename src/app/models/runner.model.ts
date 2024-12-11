@@ -1,7 +1,7 @@
 export interface Runner {
   runnerId: number
-  firstName: string
-  lastName: string
+  firstname: string
+  lastname: string
   gender: string
   birthYear: number
 }

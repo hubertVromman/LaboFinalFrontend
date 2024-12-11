@@ -84,10 +84,8 @@ export class AddRaceComponent {
   }
 
   search(event: AutoCompleteCompleteEvent) {
-
     this.filteredLocalities = this.localities.filter((l: Locality) =>
       l.name.toLowerCase().indexOf(event.query.toLowerCase()) == 0
     );
-
   }
 }

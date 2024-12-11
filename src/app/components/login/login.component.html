@@ -4,7 +4,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
     <div class="formseparator"></div>
-    <p-floatLabel>
+    <p-floatLabel variant="on">
       <input
         pInputText
         type="email"
@@ -16,7 +16,7 @@
     <app-form-error [formGroup]="loginForm" controlName="email"></app-form-error>
 
     <div class="formseparator"></div>
-    <p-floatLabel>
+    <p-floatLabel variant="on">
       <input
         pInputText
         type="password"

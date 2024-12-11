@@ -1,9 +1,20 @@
-<p-button (onClick)="goTo('races')" link="true" label="Tous les résultats"></p-button>
-
 <p-table
   [value]="races.objects"
   styleClass="p-datatable-striped"
   [tableStyle]="{ 'min-width': '50%' }"
+  [scrollable]="true"
+  scrollHeight="80vh"
+
+  paginator="true"
+  paginatorPosition="both"
+  lazy="true"
+  [rows]="pagination.limit"
+  [first]="pagination.first"
+  [totalRecords]="totalRecords"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  (onPage)="onPageChange($event)"
+  [rowsPerPageOptions]="paginatorOptions"
 >
   <ng-template pTemplate="header">
     <tr>

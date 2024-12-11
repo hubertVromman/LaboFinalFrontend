@@ -1,19 +1,36 @@
-<p-button (click)="goTo('home')">
+<!-- <p-button (click)="goTo('home')">
   <img [src]="logoPath" width="100px" height="auto" />
-</p-button>
+</p-button> -->
+<div class="container">
+  <div class="item">
+    <p-button icon="pi pi-home" (click)="goTo('home')"></p-button>
+    <p-button icon="pi pi-plus" (click)="goTo('addrace')"></p-button>
+  </div>
 
-<p-button icon="pi pi-home" (click)="goTo('home')"></p-button>
-<p-button icon="pi pi-plus" (click)="goTo('addrace')"></p-button>
+  <form class="item">
+    <p-iconField>
+      <p-inputIcon styleClass="pi pi-search" />
+      <p-autoComplete
+        type="text"
+        [(ngModel)]="search"
+        [suggestions]="[]"
+        (completeMethod)="complete($event)"
+      />
+    </p-iconField>
+  </form>
 
-@if (this.isConnected) {
-  @if (user$ | async; as user) {
-    @if (user.role == 'Admin') {
-      <p-button [link]="true" (onClick)="goTo('admin')" label="page admin"></p-button>
+  <div class="item">
+    @if (this.isConnected) {
+      @if (user$ | async; as user) {
+        @if (user.role == 'Admin') {
+          <p-button [link]="true" (onClick)="goTo('admin')" label="page admin"></p-button>
+        }
+        <p-button [link]="true" (onClick)="goTo('profile')" [label]="user.firstname + ' ' + user.lastname"></p-button>
+      }
+      <p-button [link]="true" label="Se déconnecter" (onClick)="logout()"></p-button>
+    } @else {
+      <app-register></app-register>
+      <app-login></app-login>
     }
-    <p-button [link]="true" (onClick)="goTo('profile')" [label]="user.firstname + ' ' + user.lastname"></p-button>
-  }
-  <p-button [link]="true" label="Se déconnecter" (onClick)="logout()"></p-button>
-} @else {
-  <app-register></app-register>
-  <app-login></app-login>
-}
+  </div>
+</div>

@@ -2,7 +2,57 @@
   {{ race.raceName }} {{ race.distance }}km
 </h2>
 
-@for (result of results; track $index) {
-  {{ result.generalRankShown }} {{ result.runner?.lastName }} {{ result.runner?.firstName }} {{ result.time }} {{ result.speed }}
+<!-- @for (result of results.objects; track $index) {
+  {{ result.generalRankShown }} {{ result.runner?.lastname }} {{ result.runner?.firstname }} {{ result.time }} {{ result.speed }}
   <br>
-}
+} -->
+
+<p-table
+  [value]="results.objects"
+  styleClass="p-datatable-striped"
+  [tableStyle]="{ 'min-width': '50%' }"
+  scrollable="true"
+  scrollHeight="80vh"
+
+  paginator="true"
+  paginatorPosition="top"
+  lazy="true"
+  [rows]="pagination.limit"
+  [first]="pagination.first"
+  [totalRecords]="totalRecords"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  (onPage)="onPageChange($event)"
+  [rowsPerPageOptions]="paginatorOptions"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Général</th>
+      <th>Nom Prénom</th>
+      <th>MF</th>
+      <th>Temps</th>
+      <th>Vitesse</th>
+      <th>Allure</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-result>
+    <tr>
+      <td>{{ result.generalRankShown }}</td>
+      <td><a [routerLink]="'/runner/' + result.runnerId">{{ result.runner.lastname }} {{ result.runner.firstname }}</a></td>
+      <td>{{ result.runner.gender }} ({{ result.genderRank }})</td>
+      <td>{{ result.time }}</td>
+      <td>{{ result.speed }} km/h</td>
+      <td>{{ result.pace }} min/km</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- <p-paginator
+  [rows]="rows"
+  [first]="first"
+  [totalRecords]="totalRecords"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  (onPageChange)="onPageChange($event)"
+  [rowsPerPageOptions]="paginatorOptions"
+></p-paginator> -->
