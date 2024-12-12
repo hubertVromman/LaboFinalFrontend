@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     } as AbstractControlOptions);
 
     this._auth.mustOpenRegister.subscribe({
-      next: () => this.visible = true
+      next: () => this.showDialog()
     })
   }
 
@@ -52,6 +52,10 @@ export class RegisterComponent implements OnInit {
   }
 
   showDialog() {
+    Object.values(this.registerForm.controls).forEach(element => {
+      element.markAsPristine();
+      element.markAsUntouched();
+    });
     this.visible = true;
   }
 

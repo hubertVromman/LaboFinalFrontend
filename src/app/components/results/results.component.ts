@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { environment } from '../../../../environment';
@@ -9,7 +10,7 @@ import { Pagination } from '../../models/pagination.model';
 @Component({
   selector: 'app-results',
   standalone: true,
-  imports: [TableModule, PaginatorModule, DatePipe, RouterModule],
+  imports: [TableModule, PaginatorModule, DatePipe, RouterModule, ButtonModule],
   templateUrl: './results.component.html',
   styleUrl: './results.component.scss'
 })

@@ -1,37 +1,46 @@
-import { DecimalPipe, UpperCasePipe } from '@angular/common';
+// import { Component } from '@angular/core';
+
+// @Component({
+//   selector: 'app-races',
+//   standalone: true,
+//   imports: [],
+//   templateUrl: './races.component.html',
+//   styleUrl: './races.component.scss'
+// })
+// export class RacesComponent {
+
+// }
+
+import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { environment } from '../../../../environment';
-import { ObjectsWithPagination } from '../../models/objects-with-pagination.model';
 import { Pagination } from '../../models/pagination.model';
-import { Race } from '../../models/race.model';
 
 @Component({
-  selector: 'app-race',
+  selector: 'app-races',
   standalone: true,
-  imports: [UpperCasePipe, TableModule, PaginatorModule, RouterModule, ButtonModule, DecimalPipe],
-  templateUrl: './race.component.html',
-  styleUrl: './race.component.scss'
+  imports: [TableModule, PaginatorModule, DatePipe, RouterModule, ButtonModule],
+  templateUrl: './races.component.html',
+  styleUrl: './races.component.scss'
 })
-export class RaceComponent {
+export class RacesComponent {
 
   private ar = inject(ActivatedRoute);
   private router = inject(Router);
 
   paginatorOptions = environment.paginatorOptions;
 
-  race: Race = this.ar.snapshot.data['race'];
-  results: ObjectsWithPagination = this.ar.snapshot.data['results'];
+  races = this.ar.snapshot.data['races'];
   pagination: Pagination = this.ar.snapshot.data['pagination'];
-  totalRecords = this.results.count;
+  totalRecords = this.races.count;
 
   ngOnInit() {
     this.ar.data.subscribe((resolversData) => {
-      this.race = resolversData['race'];
-      this.results = resolversData['results'];
+      this.races = resolversData['races'];
       this.pagination = resolversData['pagination'];
     });
   }
@@ -45,6 +54,6 @@ export class RaceComponent {
     else if ('first' in paginatorState)
       this.pagination.page = (paginatorState.first! / this.pagination.limit) + 1;
 
-    this.router.navigate(['race/', this.race.raceId], { queryParams: { 'page': this.pagination.page, 'limit': this.pagination.limit } });
+    this.router.navigate(['races'], { queryParams: { 'page': this.pagination.page, 'limit': this.pagination.limit } });
   }
 }

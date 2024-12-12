@@ -16,4 +16,8 @@ export class RunnerService {
   getById(id: number) : Observable<Runner> {
     return this.client.get<Runner>(`${this.url}/Runner/${id}`);
   }
+
+  search(query: string) {
+    return this.client.get<Runner[]>(`${this.url}/Runner/Search/${query}`);
+  }
 }

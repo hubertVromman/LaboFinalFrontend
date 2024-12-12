@@ -2,14 +2,10 @@
   {{ race.raceName }} {{ race.distance }}km
 </h2>
 
-<!-- @for (result of results.objects; track $index) {
-  {{ result.generalRankShown }} {{ result.runner?.lastname }} {{ result.runner?.firstname }} {{ result.time }} {{ result.speed }}
-  <br>
-} -->
-
 <p-table
   [value]="results.objects"
-  styleClass="p-datatable-striped"
+  styleClass="p-datatable-sm"
+  stripedRows
   [tableStyle]="{ 'min-width': '50%' }"
   scrollable="true"
   scrollHeight="80vh"
@@ -38,21 +34,11 @@
   <ng-template pTemplate="body" let-result>
     <tr>
       <td>{{ result.generalRankShown }}</td>
-      <td><a [routerLink]="'/runner/' + result.runnerId">{{ result.runner.lastname }} {{ result.runner.firstname }}</a></td>
+      <td><p-button styleClass="noPadding" link="true" [routerLink]="['/runner', result.runnerId]" label="{{ result.runner.lastname }} {{ result.runner.firstname }}" /></td>
       <td>{{ result.runner.gender }} ({{ result.genderRank }})</td>
       <td>{{ result.time }}</td>
-      <td>{{ result.speed }} km/h</td>
+      <td>{{ result.speed | number: '1.2-2' }} km/h</td>
       <td>{{ result.pace }} min/km</td>
     </tr>
   </ng-template>
 </p-table>
-
-<!-- <p-paginator
-  [rows]="rows"
-  [first]="first"
-  [totalRecords]="totalRecords"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-  (onPageChange)="onPageChange($event)"
-  [rowsPerPageOptions]="paginatorOptions"
-></p-paginator> -->

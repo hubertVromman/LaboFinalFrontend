@@ -1,14 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { CardModule } from 'primeng/card';
 import { FileSelectEvent, FileUpload, FileUploadModule } from 'primeng/fileupload';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { validDateValidator } from '../../../validators/date.validator';
 import { Locality } from '../../models/locality';
 import { RaceService } from '../../services/race.service';
 import { FormErrorComponent } from '../form-error/form-error.component';
@@ -16,7 +18,7 @@ import { FormErrorComponent } from '../form-error/form-error.component';
 @Component({
   selector: 'app-add-race',
   standalone: true,
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, InputMaskModule, FloatLabelModule, FormErrorComponent, FileUploadModule, AutoCompleteModule, DropdownModule],
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule, InputMaskModule, FloatLabelModule, FormErrorComponent, FileUploadModule, AutoCompleteModule, SelectModule, CardModule],
   templateUrl: './add-race.component.html',
   styleUrl: './add-race.component.scss'
 })
@@ -25,6 +27,8 @@ export class AddRaceComponent {
   private ar = inject(ActivatedRoute);
   private router = inject(Router);
   private rs = inject(RaceService);
+
+  @ViewChild('fileUpload') fileUpload!: FileUpload;
 
   localities = this.ar.snapshot.data['localities'];
   filteredLocalities: Locality[] = [];
@@ -35,7 +39,7 @@ export class AddRaceComponent {
     raceName: [null, [Validators.required]],
     place: [null, [Validators.required]],
     raceType: [null, [Validators.required]],
-    startDate: [null, [Validators.required]],
+    startDate: [null, [Validators.required, validDateValidator()]],
     distance: [null, [Validators.required]],
     realDistance: [null, [Validators.required]],
     file: [null, [Validators.required]],
@@ -46,14 +50,22 @@ export class AddRaceComponent {
     formValue.startDate = this.convertDate(formValue.startDate);
 
     this.rs.create(this.toFormData(formValue)).subscribe({
-      next: data => console.log(data)
+      next: () => {
+        if (formValue.keepDate)
+          this.raceForm.reset(this.raceForm.value);
+        else {
+          this.fileUpload.clear();
+          this.raceForm.reset();
+          this.raceForm.markAsUntouched();
+          this.raceForm.markAsPristine();
+        }
+      },
+      error: (error) => console.log(error)
     })
   }
 
   onFilePicked(event: FileSelectEvent) {
-    console.log(event)
     let file = event.files[0]; // Here we use only the first file (single file)
-    console.log(file);
 
     this.raceForm.patchValue({ file: file });
   }

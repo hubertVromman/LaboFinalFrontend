@@ -1,9 +1,31 @@
-<p>
+<h2>
   {{runner.firstname}}
   {{runner.lastname}}
-</p>
+</h2>
 
-@for (result of results; track $index) {
+<!-- @for (result of results; track $index) {
   <a [routerLink]="['/race', result.raceId]">{{result.race?.raceName}}</a>
   <p>{{result.generalRankShown}} / {{result.race?.resultNumber}}</p>
-}
+} -->
+
+<p-table
+  [value]="results"
+  [tableStyle]="{ 'min-width': '50%' }"
+  [scrollable]="true"
+  scrollHeight="80vh"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Résultats</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-result>
+    <tr>
+      <td><p-button link="true" [routerLink]="['/race', result.race.raceId]" label="{{ result.race.raceName }} {{ result.race.distance }}km {{ result.race.startDate | year }}" /></td>
+      <td>{{ result.time }}</td>
+      <td>{{ result.generalRank }} / {{ result.race.resultNumber }}</td>
+    </tr>
+  </ng-template>
+</p-table>

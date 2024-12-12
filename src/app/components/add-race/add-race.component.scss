@@ -2,3 +2,13 @@ p-fileupload {
   display: inline-block;
   margin-right: 20px;
 }
+
+::ng-deep .p-card {
+  max-width: 300px;
+  width: 300px;
+  margin: auto;
+}
+
+::ng-deep input, .p-inputnumber, .p-autocomplete, .p-select, .p-floatlabel, p-autocomplete {
+  width: 100%;
+}

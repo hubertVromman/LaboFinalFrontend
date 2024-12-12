@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     });
 
     _auth.mustOpenLogin.subscribe({
-      next: () => this.visible = true
+      next: () => this.showDialog()
     })
   }
 
@@ -44,6 +44,10 @@ export class LoginComponent implements OnInit {
   }
 
   showDialog() {
+    Object.values(this.loginForm.controls).forEach(element => {
+      element.markAsPristine();
+      element.markAsUntouched();
+    });
     this.visible = true;
   }
 

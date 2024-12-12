@@ -5,19 +5,26 @@
   <div class="item">
     <p-button icon="pi pi-home" (click)="goTo('home')"></p-button>
     <p-button icon="pi pi-plus" (click)="goTo('addrace')"></p-button>
+    <p-button link="true" label="Résultats" routerLink="races"></p-button>
   </div>
 
-  <form class="item">
-    <p-iconField>
-      <p-inputIcon styleClass="pi pi-search" />
-      <p-autoComplete
-        type="text"
-        [(ngModel)]="search"
-        [suggestions]="[]"
-        (completeMethod)="complete($event)"
-      />
-    </p-iconField>
-  </form>
+  <div class="item grow">
+    <p-autocomplete
+      #searchField
+      type="text"
+      minLength="2"
+      [lazy]="true"
+      [style]="{'width':'100%'}"
+      [inputStyle]="{'width':'100%'}"
+      placeholder="Chercher une course ou un coureur"
+      [(ngModel)]="search"
+      [suggestions]="suggestions"
+      [optionLabel]="getLabel"
+      [autoOptionFocus]="true"
+      (completeMethod)="complete($event)"
+      (onSelect)="onSelect($event)"
+    />
+  </div>
 
   <div class="item">
     @if (this.isConnected) {

@@ -1,116 +1,110 @@
-<form [formGroup]="raceForm"  (ngSubmit)="onSubmit()">
+<h2>
+  Ajouter une course
+</h2>
 
-  <div class="formseparator"></div>
-  <p-floatLabel>
-    <input
-      pInputText
-      type="text"
-      formControlName="raceName"
-      [class.ng-dirty]="getControl(['raceName']).touched"
-    >
-    <label for="raceName">Nom de la course</label>
-  </p-floatLabel>
-  <app-form-error [formGroup]="raceForm" controlName="raceName"></app-form-error>
+<p-card>
 
-  <div class="formseparator"></div>
-  <p-floatLabel>
-    <p-autoComplete
-      type="text"
-      formControlName="place"
-      [suggestions]="filteredLocalities"
-      (completeMethod)="search($event)"
-      optionLabel="name"
-      optionValue="name"
-      [class.ng-dirty]="getControl(['place']).touched"
-    />
-    <label for="place">Localité</label>
-  </p-floatLabel>
-  <app-form-error [formGroup]="raceForm" controlName="place"></app-form-error>
+  <form [formGroup]="raceForm"  (ngSubmit)="onSubmit()">
 
-  <div class="formseparator"></div>
-  <p-dropdown
-    [options]="raceTypes"
-    formControlName="raceType"
-    placeholder="Type de course"
-    [class.ng-dirty]="getControl(['raceType']).touched"
-  />
-  <!-- <p-floatLabel>
-    <input
-      pInputText
-      type="text"
+    <div class="formseparator"></div>
+    <p-floatLabel variant="on">
+      <input
+        pInputText
+        type="text"
+        formControlName="raceName"
+        [class.ng-dirty]="getControl(['raceName']).touched"
+      >
+      <label for="raceName">Nom de la course</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="raceForm" controlName="raceName"></app-form-error>
+
+    <div class="formseparator"></div>
+    <p-floatLabel variant="on">
+      <p-autoComplete
+        type="text"
+        [style]="{'width':'100%'}"
+        [inputStyle]="{'width':'100%'}"
+        formControlName="place"
+        [suggestions]="filteredLocalities"
+        (completeMethod)="search($event)"
+        optionLabel="name"
+        optionValue="name"
+        [class.ng-dirty]="getControl(['place']).touched"
+      />
+      <label for="place">Localité</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="raceForm" controlName="place"></app-form-error>
+
+    <div class="formseparator"></div>
+    <p-select
+      [options]="raceTypes"
       formControlName="raceType"
+      placeholder="Type de course"
       [class.ng-dirty]="getControl(['raceType']).touched"
-    >
-    <label for="raceType">Type de course</label>
-  </p-floatLabel> -->
-  <app-form-error [formGroup]="raceForm" controlName="raceType"></app-form-error>
-
-  <div class="formseparator"></div>
-  <p-floatLabel>
-    <p-inputMask
-      mask="99/99/9999"
-      placeholder="dd/mm/yyyy"
-      formControlName="startDate"
-      slotChar="dd/mm/yyyy"
-      [class.ng-dirty]="getControl(['startDate']).touched"
     />
-    <label for="startDate">Date de départ</label>
-  </p-floatLabel>
-  <app-form-error [formGroup]="raceForm" controlName="startDate"></app-form-error>
+    <!-- <p-floatLabel variant="on">
+      <input
+        pInputText
+        type="text"
+        formControlName="raceType"
+        [class.ng-dirty]="getControl(['raceType']).touched"
+      >
+      <label for="raceType">Type de course</label>
+    </p-floatLabel> -->
+    <app-form-error [formGroup]="raceForm" controlName="raceType"></app-form-error>
 
-<!--
-  <div>
-    <label for="startDate">Date de départ </label>
-    <p-inputMask
-      mask="99/99/9999"
-      placeholder="dd/mm/yyyy"
-      formControlName="startDate"
-      slotChar="dd/mm/yyyy"
-      [class.ng-dirty]="getControl(['startDate']).touched"
-    />
+    <div class="formseparator"></div>
+    <p-floatLabel variant="on">
+      <p-inputMask
+        mask="99/99/9999"
+        formControlName="startDate"
+        slotChar="dd/mm/yyyy"
+        [class.ng-dirty]="getControl(['startDate']).touched"
+      />
+      <label for="startDate">Date de départ</label>
+    </p-floatLabel>
     <app-form-error [formGroup]="raceForm" controlName="startDate"></app-form-error>
-  </div> -->
 
+    <div class="formseparator"></div>
+    <p-floatLabel variant="on">
+      <p-inputNumber
+        type="number"
+        formControlName="distance"
+        [class.ng-dirty]="getControl(['distance']).touched"
+        locale="fr-BE"
+        [maxFractionDigits]="2"
+      />
+      <label for="distance">Distance</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="raceForm" controlName="distance"></app-form-error>
 
-  <div class="formseparator"></div>
-  <p-floatLabel>
-    <p-inputNumber
-      type="number"
-      formControlName="distance"
-      [class.ng-dirty]="getControl(['distance']).touched"
-      locale="fr-BE"
-      [maxFractionDigits]="2"
+    <div class="formseparator"></div>
+    <p-floatLabel variant="on">
+      <p-inputNumber
+        type="number"
+        formControlName="realDistance"
+        [class.ng-dirty]="getControl(['realDistance']).touched"
+        locale="fr-BE"
+        [maxFractionDigits]="2"
+      />
+      <label for="realDistance">Distance réelle</label>
+    </p-floatLabel>
+    <app-form-error [formGroup]="raceForm" controlName="realDistance"></app-form-error>
+
+    <div class="formseparator"></div>
+    <p-fileUpload
+      #fileUpload
+      mode="basic"
+      chooseLabel="Choose"
+      chooseIcon="pi pi-upload"
+      accept="application/pdf"
+      maxFileSize="1000000"
+      (onSelect)="onFilePicked($event)"
     />
-    <label for="distance">Distance</label>
-  </p-floatLabel>
-  <app-form-error [formGroup]="raceForm" controlName="distance"></app-form-error>
+    <!-- <p-button icon="pi pi-times" (onClick)="clearFileInput(fileUpload)" /> -->
 
-  <div class="formseparator"></div>
-  <p-floatLabel>
-    <p-inputNumber
-      type="number"
-      formControlName="realDistance"
-      [class.ng-dirty]="getControl(['realDistance']).touched"
-      locale="fr-BE"
-      [maxFractionDigits]="2"
-    />
-    <label for="realDistance">Distance réelle</label>
-  </p-floatLabel>
-  <app-form-error [formGroup]="raceForm" controlName="realDistance"></app-form-error>
+    <div class="formseparator"></div>
 
-  <div class="formseparator"></div>
-  <p-fileUpload
-    #fileUpload
-    mode="basic"
-    chooseLabel="Choose"
-    chooseIcon="pi pi-upload"
-    accept="application/pdf"
-    maxFileSize="1000000"
-    (onSelect)="onFilePicked($event)"
-  />
-  <p-button icon="pi pi-times" (onClick)="clearFileInput(fileUpload)" />
-
-  <div class="formseparator"></div>
-
-  <p-button [disabled]="raceForm.invalid" type="ngSubmit" label="Envoyer" />
-</form>
+    <p-button [disabled]="raceForm.invalid" type="ngSubmit" label="Envoyer" />
+  </form>
+</p-card>

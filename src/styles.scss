@@ -1,8 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "primeng/resources/themes/lara-light-blue/theme.css";
-@import "primeng/resources/primeng.css";
-
 @import "primeicons/primeicons.css";
 
 @import "primeflex/primeflex.css";
@@ -11,7 +8,9 @@
   height: 25px;
 }
 
-html body {
+html, body {
   padding: 0;
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  // font-size: 14px;
 }

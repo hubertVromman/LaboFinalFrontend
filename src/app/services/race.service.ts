@@ -24,4 +24,8 @@ export class RaceService {
   getByDate(offset = 0, limit = 10) {
     return this.client.get<ObjectsWithPagination>(`${this.url}/Race/ByDate?offset=${offset}&limit=${limit}`);
   }
+
+  search(query: string) {
+    return this.client.get<Race[]>(`${this.url}/Race/Search/${query}`);
+  }
 }

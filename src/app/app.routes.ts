@@ -4,7 +4,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RaceComponent } from './components/race/race.component';
-import { ResultsComponent } from './components/results/results.component';
+import { RacesComponent } from './components/races/races.component';
 import { RunnerComponent } from './components/runner/runner.component';
 import { localitiesResolver } from './resolvers/localities.resolver';
 import { paginationResolver } from './resolvers/pagination.resolver';
@@ -32,7 +32,8 @@ export const routes: Routes = [
   },
   { path: "runner/:id",
     resolve: { runner: runnerResolver, results: resultsByRunnerResolver },
-    component: RunnerComponent
+    component: RunnerComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
   { path: "race/:id",
     resolve: { race: raceResolver, results: resultsByRaceResolver, pagination: paginationResolver },
@@ -41,7 +42,7 @@ export const routes: Routes = [
   },
   { path: "races",
     resolve: { races: racesResolver, pagination: paginationResolver },
-    component: ResultsComponent
+    component: RacesComponent
   },
   { path: "error",
     component: ErrorComponent
