@@ -1,30 +1,38 @@
-<div class="error" *ngIf="ctrl?.touched && ctrl?.errors">
-  <span *ngIf="ctrl?.errors?.['passwordMatch']">
-      Les mots de passe sont différents.
-  </span>
-
-  <span *ngIf="ctrl?.errors?.['required']">
-    Le champ est requis.
-  </span>
-
-  <span *ngIf="ctrl?.errors?.['email']">
-    Le champ attend un email.
-  </span>
-
-  <span *ngIf="ctrl?.errors?.['errorMessage']">
-    {{ ctrl?.errors?.['errorMessage'] }}
-  </span>
-
-  <span *ngIf="ctrl?.errors?.['digit']">
-      {{ ctrl?.errors?.['digit'].message }}
-  </span>
-  <span *ngIf="ctrl?.errors?.['uppercase']">
-      {{ ctrl?.errors?.['uppercase'].message }}
-  </span>
-  <span *ngIf="ctrl?.errors?.['lowercase']">
-      {{ ctrl?.errors?.['lowercase'].message }}
-  </span>
-  <span *ngIf="ctrl?.errors?.['specialChar']">
-      {{ ctrl?.errors?.['specialChar'].message }}
-  </span>
-</div>
+@if (ctrl?.touched && ctrl?.errors) {
+  <div class="error">
+    <span *ngIf="ctrl?.errors?.['passwordMatch']">
+        Les mots de passe sont différents.
+    </span>
+  
+    <span *ngIf="ctrl?.errors?.['required']">
+      Le champ est requis.
+    </span>
+  
+    <span *ngIf="ctrl?.errors?.['email']">
+      Le champ attend un email.
+    </span>
+  
+    <span *ngIf="ctrl?.errors?.['errorMessage']">
+      {{ ctrl?.errors?.['errorMessage'] }}
+    </span>
+  
+    <span *ngIf="ctrl?.errors?.['digit']">
+        {{ ctrl?.errors?.['digit'].message }}
+    </span>
+    <span *ngIf="ctrl?.errors?.['uppercase']">
+        {{ ctrl?.errors?.['uppercase'].message }}
+    </span>
+    <span *ngIf="ctrl?.errors?.['lowercase']">
+        {{ ctrl?.errors?.['lowercase'].message }}
+    </span>
+    <span *ngIf="ctrl?.errors?.['specialChar']">
+        {{ ctrl?.errors?.['specialChar'].message }}
+    </span>
+  </div>
+} @else {
+  <div class="error">
+    <span>
+      &#8205;
+    </span>
+  </div>
+}

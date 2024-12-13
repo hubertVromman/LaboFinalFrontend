@@ -34,7 +34,11 @@
   <ng-template pTemplate="body" let-result>
     <tr>
       <td>{{ result.generalRankShown }}</td>
-      <td><p-button styleClass="noPadding" link="true" [routerLink]="['/runner', result.runnerId]" label="{{ result.runner.lastname }} {{ result.runner.firstname }}" /></td>
+      @if (!result.runner.isAnonymous) {
+        <td><p-button styleClass="noPadding" link="true" [routerLink]="['/runner', result.runnerId]" label="{{ result.runner.lastname }} {{ result.runner.firstname }}" /></td>
+      } @else {
+        <td>{{ result.runner.lastname }} {{ result.runner.firstname }}</td>
+      }
       <td>{{ result.runner.gender }} ({{ result.genderRank }})</td>
       <td>{{ result.time }}</td>
       <td>{{ result.speed | number: '1.2-2' }} km/h</td>

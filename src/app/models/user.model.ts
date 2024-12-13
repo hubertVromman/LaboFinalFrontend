@@ -5,4 +5,5 @@ export interface User {
   lastname: string
   firstname: string
   role: string
+  isAnonymous: boolean
 }

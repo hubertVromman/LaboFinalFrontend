@@ -56,7 +56,7 @@ export class AuthService {
     return this._client.head(`${this.url}/User/CheckName/?firstname=${firstname}&lastname=${lastname}`);
   }
 
-  refreshTokens() {
+  refreshTokens() { 
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     let tokens = {
@@ -82,6 +82,10 @@ export class AuthService {
       // if (!this.isConnected)
       //   return
       return this._client.get<User>(`${this.url}/User/Profile`)
+  }
+
+  changeAnonymous(value: boolean) {
+    return this._client.post(`${this.url}/User/Anonymous`, { isAnonymous: value })
   }
 
   openLogin() {

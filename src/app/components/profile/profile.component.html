@@ -1,9 +1,16 @@
-<h1>
-  Profil
-</h1>
+<h2>
+  Mon profil
+</h2>
 @if (user$ | async; as user) {
-  <h2> {{user.firstname}} {{user.lastname}}</h2>
+  <h3> {{user.firstname}} {{user.lastname}}</h3>
   <p>
     Role : {{user.role}}
   </p>
+  <p>
+    EstAnonyme : {{user.isAnonymous}}
+  </p>
+  <p-toggleswitch 
+    [(ngModel)]="user.isAnonymous"
+    (onChange)="onChange($event)"
+  />
 }

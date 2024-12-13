@@ -4,4 +4,5 @@ export interface Runner {
   lastname: string
   gender: string
   birthYear: number
+  isAnonymous: boolean
 }
