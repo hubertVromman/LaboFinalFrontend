@@ -1,16 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-races',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './races.component.html',
-//   styleUrl: './races.component.scss'
-// })
-// export class RacesComponent {
-
-// }
-
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';

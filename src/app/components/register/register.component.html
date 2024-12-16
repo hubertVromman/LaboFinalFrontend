@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <p-button [link]="true" label="S'enregistrer" (onClick)="showDialog()"></p-button>
 <p-dialog header="S'enregister" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
@@ -10,7 +11,7 @@
         formControlName="firstname"
         [class.ng-dirty]="getControl(['firstname']).touched"
       >
-      <label for="firstname">Prenom</label>
+      <label for="firstname">Prenom<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="registerForm" controlName="firstname"></app-form-error>
 
@@ -22,7 +23,7 @@
         formControlName="lastname"
         [class.ng-dirty]="getControl(['lastname']).touched"
       >
-      <label for="lastname">Nom</label>
+      <label for="lastname">Nom<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="registerForm" controlName="lastname"></app-form-error>
 
@@ -34,7 +35,7 @@
         formControlName="email"
         [class.ng-dirty]="getControl(['email']).touched"
       >
-      <label for="email">Email</label>
+      <label for="email">Email<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="registerForm" controlName="email"></app-form-error>
 
@@ -47,7 +48,7 @@
         (change)="checkPasswordMatch()"
         [class.ng-dirty]="getControl(['password']).touched"
       >
-      <label for="password">Mot de passe</label>
+      <label for="password">Mot de passe<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="registerForm" controlName="password"></app-form-error>
 
@@ -59,7 +60,7 @@
         formControlName="passwordConfirmation"
         [class.ng-dirty]="getControl(['passwordConfirmation']).touched"
       >
-      <label for="passwordConfirmation">Confirmation</label>
+      <label for="passwordConfirmation">Confirmation<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="registerForm" controlName="passwordConfirmation"></app-form-error>
     <br>

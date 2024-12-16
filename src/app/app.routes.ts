@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ActivationComponent } from './components/activation/activation.component';
 import { AddRaceComponent } from './components/add-race/add-race.component';
 import { ErrorComponent } from './components/error/error.component';
 import { HomeComponent } from './components/home/home.component';
@@ -43,6 +44,11 @@ export const routes: Routes = [
   { path: "races",
     resolve: { races: racesResolver, pagination: paginationResolver },
     component: RacesComponent
+  },
+  { path: "activation",
+    // resolve: { race: raceResolver, results: resultsByRaceResolver, pagination: paginationResolver },
+    component: ActivationComponent,
+    // runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },
   { path: "error",
     component: ErrorComponent

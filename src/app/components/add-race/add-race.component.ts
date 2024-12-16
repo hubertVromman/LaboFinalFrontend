@@ -83,7 +83,6 @@ export class AddRaceComponent {
 
   convertDate(dateAConvertir: string) {
     let dateArray = dateAConvertir.split("/").filter(x => x);
-    console.log(dateArray)
     return `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
   }
 

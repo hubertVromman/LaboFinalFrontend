@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../services/auth.service';
 import { FormErrorComponent } from '../form-error/form-error.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, FloatLabelModule, FormErrorComponent],
+  imports: [ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, FloatLabelModule, FormErrorComponent, ToastModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  providers: [MessageService]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+
+  private messageService = inject(MessageService);
 
   loginForm: FormGroup;
 
@@ -32,15 +37,19 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
-
   onSubmit() {
     if (this.loginForm.invalid) return;
 
-    this._auth.login(this.loginForm.value);
+    this._auth.login(this.loginForm.value).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'info', summary: 'Connexion réussie', detail: '', life: 3000 });
+        this.visible = false;
+      },
+      error : data => {
+        this.messageService.add({ severity: 'info', summary: 'Connexion échouée', detail: data.error, life: 3000 });
+      }
+    });
 
-    this.visible = false;
   }
 
   showDialog() {

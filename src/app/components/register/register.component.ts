@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 import { catchError, map, Observable, of } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { FormErrorComponent } from "../form-error/form-error.component";
@@ -12,11 +14,14 @@ import { FormErrorComponent } from "../form-error/form-error.component";
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, FormErrorComponent, FloatLabelModule],
+  imports: [ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, FormErrorComponent, FloatLabelModule, ToastModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  providers: [MessageService]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
+
+  private messageService = inject(MessageService);
 
   registerForm: FormGroup;
 
@@ -31,8 +36,7 @@ export class RegisterComponent implements OnInit {
       passwordConfirmation: [null, [Validators.required]],
     }, {
       validators: [passwordMatchValidator],
-      asyncValidators: [this.existingNameValidator()],
-      updateOn: 'blur'
+      asyncValidators: [this.existingNameValidator()]
     } as AbstractControlOptions);
 
     this._auth.mustOpenRegister.subscribe({
@@ -40,15 +44,19 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
-
   onSubmit() {
     if (this.registerForm.invalid) return;
 
-    this._auth.register(this.registerForm.value);
+    this._auth.register(this.registerForm.value).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'info', summary: 'Inscription réussie', detail: 'Veuillez activer votre compte grace au lien que vous allez recevoir par email', life: 3000 });
+        this.visible = false;
+      },
+      error: data => {
+        this.messageService.add({ severity: 'error', summary: 'Inscription échouée', detail: data.error, life: 3000 });
+      }
+    });
 
-    this.visible = false;
   }
 
   showDialog() {

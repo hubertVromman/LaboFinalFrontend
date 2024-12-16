@@ -12,7 +12,6 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class AuthService {
-
   url: string = environment.apiUrl;
   get isConnected() {
     return localStorage.getItem("accessToken") != null
@@ -30,22 +29,15 @@ export class AuthService {
   }
 
   login(loginForm: LoginForm) {
-    this._client.post<Token>(`${this.url}/User/Login`, loginForm).subscribe({
-      next : (data) => {
+    return this._client.post<Token>(`${this.url}/User/Login`, loginForm).pipe(
+      tap((data) => {
         this.storeToken(data)
-      }
-    });
+      })
+    );
   }
 
   register(registerForm: RegisterForm) {
-    this._client.post(`${this.url}/User/Register`, registerForm).subscribe({
-      next : () => {
-        this.login({
-          email: registerForm.email,
-          password: registerForm.password,
-        });
-      }
-    });
+    return this._client.post(`${this.url}/User/Register`, registerForm);
   }
 
   checkEmail(email: string) {
@@ -56,7 +48,7 @@ export class AuthService {
     return this._client.head(`${this.url}/User/CheckName/?firstname=${firstname}&lastname=${lastname}`);
   }
 
-  refreshTokens() { 
+  refreshTokens() {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     let tokens = {
@@ -86,6 +78,10 @@ export class AuthService {
 
   changeAnonymous(value: boolean) {
     return this._client.post(`${this.url}/User/Anonymous`, { isAnonymous: value })
+  }
+
+  activate(userId: number, activationCode: string) {
+    return this._client.post(`${this.url}/User/Activate`, { userId, activationCode } );
   }
 
   openLogin() {

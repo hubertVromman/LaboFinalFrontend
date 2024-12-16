@@ -1,0 +1,10 @@
+@if (isActivated == "pending") {
+  <p>Activation en cours</p>
+} @else if (isActivated == "ok") {
+  <p>
+    Activation réussie
+    Vous pouvez vous connecter à présent
+  </p>
+} @else {
+  <p>Activation échouée</p>
+}

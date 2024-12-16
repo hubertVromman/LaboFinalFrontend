@@ -1,4 +1,4 @@
-import { DecimalPipe, UpperCasePipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -12,7 +12,7 @@ import { Race } from '../../models/race.model';
 @Component({
   selector: 'app-race',
   standalone: true,
-  imports: [UpperCasePipe, TableModule, PaginatorModule, RouterModule, ButtonModule, DecimalPipe],
+  imports: [TableModule, PaginatorModule, RouterModule, ButtonModule, DecimalPipe],
   templateUrl: './race.component.html',
   styleUrl: './race.component.scss'
 })
