@@ -1,4 +1,3 @@
-<p-toast></p-toast>
 <p-button [link]="true" label="S'enregistrer" (onClick)="showDialog()"></p-button>
 <p-dialog header="S'enregister" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">

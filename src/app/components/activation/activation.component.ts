@@ -17,7 +17,7 @@ export class ActivationComponent {
 
   ngOnInit() {
     const userId = this.ar.snapshot.queryParams['UserId'];
-    const activationCode = this.ar.snapshot.queryParams['ActivationCode']
+    const activationCode = this.ar.snapshot.queryParams['ActivationCode'];
     this.as.activate(userId, activationCode).subscribe({
       next: () => this.isActivated = "ok",
       error: () => this.isActivated = "not ok"

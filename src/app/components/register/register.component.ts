@@ -10,18 +10,19 @@ import { ToastModule } from 'primeng/toast';
 import { catchError, map, Observable, of } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { FormErrorComponent } from "../form-error/form-error.component";
+import { MyMessageService } from '../../services/my-message.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, FormErrorComponent, FloatLabelModule, ToastModule],
+  imports: [ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, FormErrorComponent, FloatLabelModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   providers: [MessageService]
 })
 export class RegisterComponent {
 
-  private messageService = inject(MessageService);
+  private messageService = inject(MyMessageService);
 
   registerForm: FormGroup;
 
@@ -49,14 +50,13 @@ export class RegisterComponent {
 
     this._auth.register(this.registerForm.value).subscribe({
       next: () => {
-        this.messageService.add({ severity: 'info', summary: 'Inscription réussie', detail: 'Veuillez activer votre compte grace au lien que vous allez recevoir par email', life: 3000 });
+        this.messageService.showMessage({ title: 'Inscription réussie', detail: 'Veuillez activer votre compte grace au lien que vous allez recevoir par email' });
         this.visible = false;
       },
       error: data => {
-        this.messageService.add({ severity: 'error', summary: 'Inscription échouée', detail: data.error, life: 3000 });
+        this.messageService.showMessage({ severity: 'error', title: 'Inscription échouée', detail: data.error });
       }
     });
-
   }
 
   showDialog() {
@@ -127,8 +127,6 @@ function passwordMatchValidator (control: AbstractControl): ValidationErrors | n
 
   const password = control.get('password');
   const confirmPassword = control.get('passwordConfirmation');
-
-  console.log(password?.value, confirmPassword?.value);
 
   if (password && confirmPassword && password.value !== confirmPassword.value) {
       // Appliquer l'erreur sur le champ spécifique

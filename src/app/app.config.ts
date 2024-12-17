@@ -14,6 +14,7 @@ import { dateInterceptor } from './interceptors/date.interceptor';
 import { tokenInterceptor } from './interceptors/token.interceptor';
 
 import localeFr from '@angular/common/locales/fr';
+import { MessageService } from 'primeng/api';
 registerLocaleData(localeFr);
 
 export const appConfig: ApplicationConfig = {
@@ -44,5 +45,6 @@ export const appConfig: ApplicationConfig = {
         }
     }),
     { provide: LOCALE_ID, useValue: 'fr-BE' },
+    MessageService
   ]
 };

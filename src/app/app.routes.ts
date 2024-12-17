@@ -14,6 +14,8 @@ import { racesResolver } from './resolvers/races.resolver';
 import { resultsByRaceResolver } from './resolvers/results-by-race.resolver';
 import { resultsByRunnerResolver } from './resolvers/results-by-runner.resolver';
 import { runnerResolver } from './resolvers/runner.resolver';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const routes: Routes = [
   { path: "",
@@ -46,9 +48,14 @@ export const routes: Routes = [
     component: RacesComponent
   },
   { path: "activation",
-    // resolve: { race: raceResolver, results: resultsByRaceResolver, pagination: paginationResolver },
     component: ActivationComponent,
-    // runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+  },
+  { path: "forgotPassword",
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: "resetPassword",
+    component: ResetPasswordComponent,
   },
   { path: "error",
     component: ErrorComponent

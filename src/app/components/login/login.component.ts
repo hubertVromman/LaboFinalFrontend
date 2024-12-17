@@ -9,18 +9,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../services/auth.service';
 import { FormErrorComponent } from '../form-error/form-error.component';
+import { MyMessageService } from '../../services/my-message.service';
+import { jwtDecode } from "jwt-decode";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, FloatLabelModule, FormErrorComponent, ToastModule],
+  imports: [ReactiveFormsModule, DialogModule, ButtonModule, InputTextModule, FloatLabelModule, FormErrorComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   providers: [MessageService]
 })
 export class LoginComponent {
 
-  private messageService = inject(MessageService);
+  private messageService = inject(MyMessageService);
 
   loginForm: FormGroup;
 
@@ -41,15 +43,17 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
 
     this._auth.login(this.loginForm.value).subscribe({
-      next: () => {
-        this.messageService.add({ severity: 'info', summary: 'Connexion réussie', detail: '', life: 3000 });
+      next: data => {
+        const accessToken : any = jwtDecode(data.accessToken);
+        const connectedMessage = `Connecté en temps que ${accessToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname']} ${accessToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']}`;
+        this.messageService.showMessage({ title: 'Connexion réussie', detail: connectedMessage });
         this.visible = false;
       },
       error : data => {
-        this.messageService.add({ severity: 'info', summary: 'Connexion échouée', detail: data.error, life: 3000 });
+        this.messageService.showMessage({ severity: 'error', title: 'Connexion échouée', detail: data.error });
+        // this.messageService.add({ severity: 'info', summary: 'Connexion échouée', detail: data.error, life: 3000 });
       }
     });
-
   }
 
   showDialog() {
@@ -63,6 +67,11 @@ export class LoginComponent {
   ouvrirRegister() {
     this.visible = false;
     this._auth.mustOpenRegister.next(true);
+  }
+
+  forgotPassword() {
+    this.visible = false;
+    this._router.navigate(['forgotPassword']);
   }
 
   getControl(ctrl: string[]): FormControl {

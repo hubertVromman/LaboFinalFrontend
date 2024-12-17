@@ -7,6 +7,8 @@ import { LoginForm } from '../models/login-form.model';
 import { RegisterForm } from '../models/register-form.model';
 import { Token } from '../models/token.model';
 import { User } from '../models/user.model';
+import { ForgotPasswordForm } from '../models/forgot-password-form.model';
+import { ResetPasswordForm } from '../models/reset-password-form.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class AuthService {
   get isConnected() {
     return localStorage.getItem("accessToken") != null
   };
-  isConnectedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isConnected);
+  isConnectedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   mustOpenLogin: Subject<boolean> = new Subject<boolean>();
   mustOpenRegister: Subject<boolean> = new Subject<boolean>();
 
@@ -34,6 +36,14 @@ export class AuthService {
         this.storeToken(data)
       })
     );
+  }
+
+  forgotPassword(forgotPasswordForm: ForgotPasswordForm) {
+    return this._client.post(`${this.url}/User/ForgotPassword`, forgotPasswordForm);
+  }
+
+  resetPassword(resetPasswordForm: ResetPasswordForm) {
+    return this._client.post(`${this.url}/User/ResetPassword`, resetPasswordForm);
   }
 
   register(registerForm: RegisterForm) {

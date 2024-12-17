@@ -13,6 +13,8 @@ import { RaceService } from '../../services/race.service';
 import { RunnerService } from '../../services/runner.service';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-navbar',
@@ -43,8 +45,13 @@ export class NavbarComponent {
     this.as.isConnectedSubject.subscribe({
       next: (data) => {
         this.isConnected = data;
-        if (this.isConnected)
+        if (this.isConnected) {
           this.user$ = this.as.getProfile();
+          // this.user$.subscribe(user => {
+          //   const connectedMessage = `Connecté en temps que ${user.firstname} ${user.lastname}`
+          //   // this.messageService.add({ severity: 'info', summary: 'Connexion réussie', detail: connectedMessage, life: 3000 });
+          // })
+        }
       }
     });
 
@@ -77,7 +84,6 @@ export class NavbarComponent {
       this.router.navigate(['runner', event.value.runnerId]);
     this.search = "";
     this.suggestions = [];
-    // this.searchField.rootEl.firstChild.firstChild.blur();
     setTimeout(() => this.searchField.rootEl.firstChild.firstChild.blur(), 50)
   }
 
