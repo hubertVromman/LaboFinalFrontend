@@ -17,7 +17,9 @@ export const resultsByRaceResolver: ResolveFn<ObjectsWithPagination> = (route, s
   let limit = route.queryParams['limit'] ?? paginatorOptions[0];
   limit = parseInt(limit);
 
-  return rs.getByRaceId(id, (page - 1) * limit, limit).pipe(
+  let name = route.queryParams['name'];
+
+  return rs.getByRaceId(id, (page - 1) * limit, limit, name).pipe(
     catchError(e => {
       console.log(e);
       router.navigate(['error']);

@@ -2,6 +2,14 @@
   {{ race.raceName }} {{ race.distance }}km
 </h2>
 
+<div class="card flex justify-center">
+  <p-iconfield>
+    <input type="text" pInputText [(ngModel)]="nameSearch" placeholder="Chercher un coureur" (keydown.enter)="search()" />
+    <p-inputicon styleClass="pi pi-times" (click)="clear()" />
+  </p-iconfield>
+  <p-button label="Chercher" type="submit" (onClick)="search()" />
+</div>
+
 <p-table
   [value]="results.objects"
   styleClass="p-datatable-sm"

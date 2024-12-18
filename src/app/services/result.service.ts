@@ -17,7 +17,10 @@ export class ResultService {
     return this.client.get<Result>(`${this.url}/Result/ByRunner/${id}`);
   }
 
-  getByRaceId(id: number, offset: number, limit: number) {
-    return this.client.get<ObjectsWithPagination>(`${this.url}/Result/ByRace/${id}?offset=${offset}&limit=${limit}`);
+  getByRaceId(id: number, offset: number, limit: number, name: string | undefined) {
+    if (name)
+      return this.client.get<ObjectsWithPagination>(`${this.url}/Result/ByRace/${id}?offset=${offset}&limit=${limit}&name=${name}`);
+    else
+      return this.client.get<ObjectsWithPagination>(`${this.url}/Result/ByRace/${id}?offset=${offset}&limit=${limit}`);
   }
 }
