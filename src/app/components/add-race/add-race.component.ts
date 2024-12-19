@@ -98,8 +98,9 @@ export class AddRaceComponent {
   }
 
   search(event: AutoCompleteCompleteEvent) {
-    this.filteredLocalities = this.localities.filter((l: Locality) =>
-      l.name.toLowerCase().indexOf(event.query.toLowerCase()) == 0
-    );
+    this.filteredLocalities = this.localities.filter((l: Locality) => {
+      const indexOfQuery = l.name.toLowerCase().indexOf(event.query.toLowerCase());
+      return indexOfQuery == 0 || (indexOfQuery > 0 && l.name[indexOfQuery - 1] == '-')
+    });
   }
 }
