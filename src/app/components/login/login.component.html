@@ -30,7 +30,7 @@
     <br>
 
     <p-button [disabled]="loginForm.invalid" type="ngSubmit" label="Se connecter" />
-    <p>Pas encore de compte ? <a (click)="ouvrirRegister()" href="javascript:void(0)">S'enregistrer</a></p>
-    <p>Mot de passe oublié ? <a (click)="forgotPassword()" href="javascript:void(0)">Réinitialiser le mot de passe</a></p>
+    <p>Pas encore de compte ? <p-button styleClass="noPadding" link="true" (click)="ouvrirRegister()" label="S'enregistrer" /></p>
+    <p>Mot de passe oublié ? <p-button styleClass="noPadding" link="true" (click)="forgotPassword()" label="Réinitialiser le mot de passe" /></p>
   </form>
 </p-dialog>

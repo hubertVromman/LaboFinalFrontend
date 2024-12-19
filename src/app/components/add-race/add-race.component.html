@@ -14,7 +14,7 @@
         formControlName="raceName"
         [class.ng-dirty]="getControl(['raceName']).touched"
       >
-      <label for="raceName">Nom de la course</label>
+      <label for="raceName">Nom de la course<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="raceForm" controlName="raceName"></app-form-error>
 
@@ -31,7 +31,7 @@
         optionValue="name"
         [class.ng-dirty]="getControl(['place']).touched"
       />
-      <label for="place">Localité</label>
+      <label for="place">Localité<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="raceForm" controlName="place"></app-form-error>
 
@@ -42,15 +42,6 @@
       placeholder="Type de course"
       [class.ng-dirty]="getControl(['raceType']).touched"
     />
-    <!-- <p-floatLabel variant="on">
-      <input
-        pInputText
-        type="text"
-        formControlName="raceType"
-        [class.ng-dirty]="getControl(['raceType']).touched"
-      >
-      <label for="raceType">Type de course</label>
-    </p-floatLabel> -->
     <app-form-error [formGroup]="raceForm" controlName="raceType"></app-form-error>
 
     <div class="formseparator"></div>
@@ -61,7 +52,7 @@
         slotChar="dd/mm/yyyy"
         [class.ng-dirty]="getControl(['startDate']).touched"
       />
-      <label for="startDate">Date de départ</label>
+      <label for="startDate">Date de départ<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="raceForm" controlName="startDate"></app-form-error>
 
@@ -74,7 +65,7 @@
         locale="fr-BE"
         [maxFractionDigits]="2"
       />
-      <label for="distance">Distance</label>
+      <label for="distance">Distance<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="raceForm" controlName="distance"></app-form-error>
 
@@ -87,7 +78,7 @@
         locale="fr-BE"
         [maxFractionDigits]="2"
       />
-      <label for="realDistance">Distance réelle</label>
+      <label for="realDistance">Distance réelle<span style="color:var(--p-floatlabel-invalid-color)">*</span></label>
     </p-floatLabel>
     <app-form-error [formGroup]="raceForm" controlName="realDistance"></app-form-error>
 
@@ -101,10 +92,12 @@
       maxFileSize="1000000"
       (onSelect)="onFilePicked($event)"
     />
-    <!-- <p-button icon="pi pi-times" (onClick)="clearFileInput(fileUpload)" /> -->
 
     <div class="formseparator"></div>
+    <p-checkbox formControlName="keepData" inputId="keepData" [binary]="true" />
+    <label for="keepData"> Garder les infos</label>
 
+    <div class="formseparator"></div>
     <p-button [disabled]="raceForm.invalid" type="ngSubmit" label="Envoyer" />
   </form>
 </p-card>

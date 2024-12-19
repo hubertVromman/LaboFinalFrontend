@@ -65,7 +65,7 @@
     <br>
 
     <p-button [disabled]="registerForm.invalid" type="ngSubmit" label="S'enregister" />
-    <p>Déja un compte ? <a (click)="ouvrirLogin()" href="javascript:void(0)">Se connecter</a></p>
+    <p>Déja un compte ? <p-button styleClass="noPadding" link="true" (click)="ouvrirLogin()" label="Se connecter" /> </p>
 
   </form>
 </p-dialog>
